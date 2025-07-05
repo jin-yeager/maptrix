@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.UsersMapper">
+
+    <resultMap id="usersMap" type="kr.or.ddit.vo.UsersVO">
+        <id property="email" column="EMAIL"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="username" column="USERNAME"/>
+        <result property="role" column="ROLE"/>
+        <result property="createdAt" column="CREATED_AT"/>
+
+        <collection property="usersAuthVOList" ofType="kr.or.ddit.vo.UsersAuthVO">
+            <result property="email" column="EMAIL"/>
+            <result property="auth"  column="AUTH"/>
+        </collection>
+    </resultMap>
+
+    <resultMap type="usersAuthVO" id="usersAuthMap">
+        <result property="email" column="EMAIL" />
+        <result property="auth" column="AUTH" />
+    </resultMap>
+
+    <select id="selectByEmail" parameterType="String" resultMap="usersMap">
+      SELECT A.EMAIL, A.PASSWORD, A.CREATED_AT,A.NAME,A.ENABLED,
+             B.AUTH
+        FROM USERS A INNER JOIN USERS_AUTH B
+          ON (A.EMAIL = B.EMAIL)
+       WHERE A.EMAIL = #{email}
+    </select>
+
+
+</mapper>
