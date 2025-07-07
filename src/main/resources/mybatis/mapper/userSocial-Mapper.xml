@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.UserSocialMapper">
+    <resultMap id="socialMap" type="UserSocialVO">
+        <id     column="PROVIDER"          property="provider"/>
+        <id     column="PROVIDER_USER_ID"  property="providerUserId"/>
+        <result column="EMAIL"             property="email"/>
+        <result column="ACCESS_TOKEN"      property="accessToken"/>
+    </resultMap>
+
+    <select id="selectByProviderAndProviderUserId" resultMap="socialMap">
+        SELECT EMAIL, PROVIDER, PROVIDER_USER_ID, ACCESS_TOKEN
+        FROM USER_SOCIAL
+        WHERE PROVIDER = #{provider}
+          AND PROVIDER_USER_ID = #{providerUserId}
+    </select>
+
+    <insert id="insertSocial" parameterType="UserSocialVO">
+        INSERT INTO USER_SOCIAL
+            (EMAIL, PROVIDER, PROVIDER_USER_ID, ACCESS_TOKEN)
+        VALUES
+            (#{email}, #{provider}, #{providerUserId}, #{accessToken})
+    </insert>
+
+    <update id="updateAccessToken">
+        UPDATE USER_SOCIAL
+        SET ACCESS_TOKEN = #{accessToken}
+        WHERE PROVIDER = #{provider}
+          AND PROVIDER_USER_ID = #{providerUserId}
+    </update>
+</mapper>

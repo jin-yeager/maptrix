@@ -38,7 +38,9 @@ public class SecurityConfig{
                 .authorizeHttpRequests(authz-> authz
                     // 포워딩 무조건 먼저 열어주고 시작해야 함.
                     .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ASYNC).permitAll()
-                    .requestMatchers("/login","/","/css/**","/js/**","/authenticate").permitAll()
+                    .requestMatchers("/login","/","/css/**","/js/**","/authenticate","/resources/**").permitAll()
+                    .requestMatchers("/oauth/kakao/**").permitAll()
+                    .requestMatchers("/oauth/naver", "/oauth/naver/callback").permitAll()
                     .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -47,7 +49,15 @@ public class SecurityConfig{
                     .usernameParameter("email") //email로 <input name="email"> 매칭,
                                                 //default: username이지만 난 email로 하겠어.
                     .defaultSuccessUrl("/",true) // 로그인 성공시 이동경로
-                    .failureUrl("/login?error")
+                    .failureUrl("/login?error=true")
+                    .permitAll()
+                )
+                // 로그아웃 설정 추가
+                .logout(logout -> logout
+                    .logoutUrl("/logout")                  // 클라이언트에서 POST /logout
+                    .logoutSuccessUrl("/login?logout=true")// 로그아웃 후 리다이렉트
+                    .invalidateHttpSession(true)           // 세션 무효화
+                    .deleteCookies("JSESSIONID") // 아직 사용하지 않았지만 JSESSIONID 쿠키 삭제
                     .permitAll()
                 )
                 // userDetailsService와 passwordEncoder 연결
@@ -63,7 +73,7 @@ public class SecurityConfig{
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-            .requestMatchers("/static/**");
+            .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
     }
 
 

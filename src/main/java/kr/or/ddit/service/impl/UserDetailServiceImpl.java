@@ -18,8 +18,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         UsersVO usersVO = this.usersMapper.selectByEmail(email);
-
-
         return usersVO == null?null : new CustomUser(usersVO);
     }
 }

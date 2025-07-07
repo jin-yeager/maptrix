@@ -11,4 +11,6 @@ public interface UsersAuthMapper {
     List<UsersAuthVO> selectAuthsByEmail(UsersAuthVO userAuth);
 
 
+
+
 }

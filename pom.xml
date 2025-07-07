@@ -155,6 +155,15 @@
             <version>0.4.8</version>
         </dependency>
         <!-- 파일업로드 끝  -->
+
+        <dependency>
+            <!-- 카카오 로그인 용 설치 -->
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <!-- Spring Boot 3.5.3 기준으로 Jackson BOM 2.18.4를 사용합니다 -->
+            <version>2.18.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

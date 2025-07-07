@@ -8,4 +8,7 @@ public interface UsersMapper {
     // UserVO.user.getEmail()를 이용해 조회
     UsersVO selectByEmail(String email);
 
+    void insertUser(UsersVO users);
+
+    void insertAuth(String email, String role);
 }

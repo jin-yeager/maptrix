@@ -28,5 +28,16 @@
        WHERE A.EMAIL = #{email}
     </select>
 
+    <insert id="insertUser" parameterType="UsersVO">
+        INSERT INTO USERS (EMAIL, PASSWORD, NAME)
+        VALUES (#{email}, #{password}, #{name})
+    </insert>
+
+    <insert id="insertAuth">
+        INSERT INTO USERS_AUTH (EMAIL, AUTH)
+        VALUES (#{email}, #{role})
+    </insert>
+
+
 
 </mapper>
